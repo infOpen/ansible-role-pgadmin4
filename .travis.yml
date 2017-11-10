@@ -27,7 +27,7 @@ install:
   - 'sudo su travis -c "lxc network attach-profile lxdbr0 default eth0"'
 
 script:
-  - 'tox -e "${TOXENV}"'
+  - 'sudo tox -e "${TOXENV}"'
 
 notifications:
   webhooks: 'https://galaxy.ansible.com/api/v1/notifications/'
