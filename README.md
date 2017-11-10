@@ -9,6 +9,8 @@ Install pgadmin4 package.
 This role requires Ansible 2.2 or higher,
 and platform requirements are listed in the metadata file.
 
+You must manage pip and Python dev with a dedicated role or add them to role `pgadmin4_system_dependencies`.
+
 ## Testing
 
 This role use [Molecule](https://github.com/metacloud/molecule/) to run tests.

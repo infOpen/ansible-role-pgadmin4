@@ -1,3 +1,13 @@
 ---
 
 # Handlers main file for pgadmin4 role
+- name: 'HANDLER | Restart pgadmin4'
+  become: True
+  service:
+    name: "{{ pgadmin4_service.name }}"
+    state: 'restarted'
+  when: "(pgadmin4_service.state | default('started')) == 'started'"
+  tags:
+    - 'role::pgadmin4'
+    - 'role::pgadmin4::config'
+    - 'role::pgadmin4::install'

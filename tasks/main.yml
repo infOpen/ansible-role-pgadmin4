@@ -7,3 +7,28 @@
   tags:
     - 'role::pgadmin4'
     - 'role::pgadmin4::init'
+
+
+- name: 'INSTALL | Manage OS family installation tasks'
+  become: True
+  include: "{{ role_path }}/tasks/install/{{ ansible_os_family | lower }}_family.yml"
+  tags:
+    - 'role::pgadmin4'
+    - 'role::pgadmin4::install'
+
+
+- name: 'INSTALL | Manage OS family installation tasks'
+  become: True
+  include: "{{ role_path }}/tasks/install/common_pip.yml"
+  tags:
+    - 'role::pgadmin4'
+    - 'role::pgadmin4::install'
+
+
+- name: 'SERVICE | Manage service configuration files'
+  become: True
+  include: "{{ role_path }}/tasks/manage_service.yml"
+  tags:
+    - 'role::pgadmin4'
+    - 'role::pgadmin4::config'
+    - 'role::pgadmin4::install'

@@ -1,0 +1,26 @@
+---
+
+- name: 'INSTALL | PIP | Install pip dependencies'
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    virtualenv: "{{ pgadmin4_virtualenv.path | default(omit) }}"
+    virtualenv_command: "{{ pgadmin4_virtualenv.command | default(omit) }}"
+    virtualenv_python: "{{ pgadmin4_virtualenv.python | default(omit) }}"
+    virtualenv_site_packages: "{{ pgadmin4_virtualenv.site_packages | default(omit) }}"
+  notify: 'HANDLER | Restart pgadmin4'
+  with_items: "{{ pgadmin4_pip_dependencies }}"
+
+
+- name: 'INSTALL | PIP | Install pgadmin4'
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    virtualenv: "{{ pgadmin4_virtualenv.path | default(omit) }}"
+    virtualenv_command: "{{ pgadmin4_virtualenv.command | default(omit) }}"
+    virtualenv_python: "{{ pgadmin4_virtualenv.python | default(omit) }}"
+    virtualenv_site_packages: "{{ pgadmin4_virtualenv.site_packages | default(omit) }}"
+  notify: 'HANDLER | Restart pgadmin4'
+  with_items: "{{ pgadmin4_pip_packages }}"

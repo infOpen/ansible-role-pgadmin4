@@ -1,0 +1,6 @@
+---
+
+_pgadmin4_system_dependencies:
+  - name: 'postgresql-server-dev-all'
+  - name: 'libgmp-dev'
+  - name: 'python3-dev'

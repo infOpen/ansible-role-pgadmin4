@@ -1,0 +1,4 @@
+---
+
+- name: 'Temelio.pip'
+- name: 'Temelio.virtualenv'

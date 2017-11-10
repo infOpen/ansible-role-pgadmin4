@@ -2,34 +2,37 @@
 
 dependency:
   name: 'galaxy'
+  options:
+    role-file: 'molecule/default/requirements.yml'
 driver:
-  name: 'docker'
+  name: 'lxd'
 lint:
   name: 'yamllint'
 platforms:
-  - name: "pgadmin4-docker-jessie"
-    image: 'minimum2scp/systemd-jessie:latest'
-    command: '/sbin/init'
-    cap_add:
-      - 'SYS_PTRACE'
-    privileged: True
-  - name: "pgadmin4-docker-xenial"
-    image: 'ubuntu:xenial'
-    cap_add:
-      - 'SYS_PTRACE'
-    privileged: True
-  - name: "pgadmin4-docker-trusty"
-    image: 'ubuntu:trusty'
-    cap_add:
-      - 'SYS_PTRACE'
-    privileged: True
+  - name: "pgadmin4-lxd-jessie"
+    source:
+      type: 'image'
+      mode: 'pull'
+      properties:
+        os: 'debian'
+        release: 'jessie'
+        architecture: 'x86_64'
+  - name: "pgadmin4-lxd-xenial"
+    source:
+      type: 'image'
+      mode: 'pull'
+      properties:
+        os: 'ubuntu'
+        release: '14.04'
+        architecture: 'x86_64'
 provisioner:
   name: 'ansible'
   lint:
     name: 'ansible-lint'
   inventory:
     group_vars:
-      all: {}
+      all:
+        ansible_python_interpreter: '/usr/bin/env python2.7'
     host_vars: {}
 scenario:
   name: 'default'

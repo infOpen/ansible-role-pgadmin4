@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Pgadmin4 Server
+
+[Service]
+ExecStart={{ pgadmin4_paths.dirs.install.path }}/.venv/bin/python {{ pgadmin4_paths.files.main.path }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

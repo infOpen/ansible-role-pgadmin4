@@ -1,0 +1,9 @@
+---
+
+- name: 'INSTALL | APT | Install system dependencies'
+  become: True
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  notify: 'HANDLER | Restart pgadmin4'
+  with_items: "{{ pgadmin4_system_dependencies }}"

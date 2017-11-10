@@ -1,3 +1,35 @@
 ---
 
 # Defaults vars file for pgadmin4 role
+
+# General
+pgadmin4_version: 'v2.0'
+
+# Paths
+pgadmin4_paths:
+  dirs:
+    install:
+      path: "/opt/pgadmin4/{{ pgadmin4_version }}"
+  files:
+    systemd:
+      path: '/etc/systemd/system/pgadmin4.service'
+    main:
+      path: "/opt/pgadmin4/{{ pgadmin4_version }}/.venv/lib/{{ _system_python3_version }}/site-packages/pgadmin4/pgAdmin4.py"
+
+# Installation variables
+pgadmin4_pip_dependencies:
+  - name: 'pexpect'
+pgadmin4_pip_packages:
+  - name: 'https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v2.0/pip/pgadmin4-2.0-py2.py3-none-any.whl'
+pgadmin4_system_dependencies: "{{ _pgadmin4_system_dependencies | default([]) }}"
+
+# Virtualenv management
+pgadmin4_virtualenv:
+  path: "{{ pgadmin4_paths.dirs.install.path }}/.venv"
+  command: 'virtualenv'
+  python: 'python3'
+  site_packages: False
+
+# Service variables
+pgadmin4_service:
+  name: 'pgadmin4'

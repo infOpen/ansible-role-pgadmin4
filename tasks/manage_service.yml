@@ -1,0 +1,25 @@
+---
+
+# Tasks about service management
+
+- name: 'SERVICE | SYSTEMD | Manage systemd service file'
+  template:
+    src: "{{ role_path }}/templates/pgadmin4.service.j2"
+    dest: "{{ pgadmin4_paths.files.systemd.path }}"
+    owner: "{{ pgadmin4_paths.files.systemd.owner | default('root') }}"
+    group: "{{ pgadmin4_paths.files.systemd.group | default('root') }}"
+    mode: "{{ pgadmin4_paths.files.systemd.mode | default('0644') }}"
+  notify: 'HANDLER | Restart pgadmin4'
+  register: '_pgadmin4_check_systemd_file'
+  when: "_system_managed_by_systemd | default(False) | bool"
+
+
+- name: 'SERVICE | SYSTEMD | Reload systemd configs'
+  systemd:
+    daemon_reload: True
+    name: "{{ pgadmin4_service.name }}"
+    enabled: "{{ pgadmin4_service.enabled | default(True) }}"
+    state: "{{ pgadmin4_service.state | default('started') }}"
+  when:
+    - "_system_managed_by_systemd | default(False) | bool"
+    - "_pgadmin4_check_systemd_file | changed"
